@@ -114,8 +114,6 @@ if(NUM_LOOPS>=10)    {
 ## OUTPUT
 $ ./sem.o 
 
-"C:\Users\admin\Desktop\imag.iin.html"
-
 $ ipcs
 
 ![image](https://github.com/swathisiva212/Linux-IPC-Semaphores/assets/155249892/a113b23e-1d42-4de8-a7bf-b1651fbd7192)
