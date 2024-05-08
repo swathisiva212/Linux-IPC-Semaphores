@@ -20,12 +20,15 @@ Execute the C Program for the desired output.
 
 # PROGRAM:
 
-## Write a C program that implements a producer-consumer system with two processes using Semaphores.
+Developed by : VARSHA A
+Register Number : 212223220121
 
-````
+## Write a C program that implements a producer-consumer system with two processes using Semaphores.
+~~~
 /*
- * sem.c  - demonstrates a basic producer-consumer
- *                            implementation.              */
+ * sem-producer-consumer.c  - demonstrates a basic producer-consumer
+ *                            implementation.
+ */
 #include <stdio.h>	 /* standard I/O routines.              */
 #include <stdlib.h>      /* rand() and srand() functions        */
 #include <unistd.h>	 /* fork(), etc.                        */
@@ -38,7 +41,6 @@ Execute the C Program for the desired output.
 /* union semun is defined by including <sys/sem.h> */
 #else
 /* according to X/OPEN we have to define it ourselves */
-
 union semun {
         int val;                    /* value for SETVAL */
         struct semid_ds *buf;       /* buffer for IPC_STAT, IPC_SET */
@@ -55,12 +57,12 @@ int main(int argc, char* argv[])
     struct sembuf sem_op;     /* structure for semaphore ops.   */
     int rc;		      /* return value of system calls.  */
     struct timespec delay;    /* used for wasting time.         */
-/* create a private semaphore set with one semaphore in it, */
+	/* create a private semaphore set with one semaphore in it, */
     /* with access only to the owner.                           */
     sem_set_id = semget(IPC_PRIVATE, 1, 0600);
     if (sem_set_id == -1) {
-	perror("main: semget");
-	exit(1);
+	   perror("main: semget");
+	   exit(1);
     }
     printf("semaphore set created, semaphore set id '%d'.\n", sem_set_id);
     /* intialize the first (and single) semaphore in our set to '0'. */
@@ -69,10 +71,10 @@ int main(int argc, char* argv[])
     /* fork-off a child process, and start a producer/consumer job. */
     child_pid = fork();
     switch (child_pid) {
-	case -1:	/* fork() failed */
+	  case -1:	/* fork() failed */
 	    perror("fork");
 	    exit(1);
-case 0:		/* child process here */
+	 case 0:		/* child process here */
 	    for (i=0; i<NUM_LOOPS; i++) {
 		/* block on the semaphore, unless it's value is non-negative. */
 		sem_op.sem_num = 0;
@@ -83,15 +85,15 @@ case 0:		/* child process here */
 		fflush(stdout);
 	    }
 	    break;
-	default:	/* parent process here */
-	    for (i=0; i<NUM_LOOPS; i++) {
-		printf("producer: '%d'\n", i);
-		fflush(stdout);
-		/* increase the value of the semaphore by 1. */
-		sem_op.sem_num = 0;
-sem_op.sem_op = 1;
-		sem_op.sem_flg = 0;
-		semop(sem_set_id, &sem_op, 1);
+		default:	/* parent process here */
+			for (i=0; i<NUM_LOOPS; i++) {
+			printf("producer: '%d'\n", i);
+			fflush(stdout);
+			/* increase the value of the semaphore by 1. */
+			sem_op.sem_num = 0;
+	sem_op.sem_op = 1;
+			sem_op.sem_flg = 0;
+			semop(sem_set_id, &sem_op, 1);
 		/* pause execution for a little bit, to allow the */
 		/* child process to run and handle some requests. */
 		/* this is done about 25% of the time.            */
@@ -100,26 +102,27 @@ sem_op.sem_op = 1;
 	    	    delay.tv_nsec = 10;
 	    	    //nanosleep(&delay, NULL);
 		                      sleep(10); }
+			
 if(NUM_LOOPS>=10)    {
-	    semctl(sem_set_id, 0, IPC_RMID, sem_val) ;} // Remove the sem_set_id
-	    }}
+	    semctl(sem_set_id, 0, IPC_RMID, sem_val) ; // Remove the sem_set_id
+	    
 	    break;
-    }
+
+		}
+	}}
+    
     return 0;
 }
-`````
-
-
+~~~
 
 ## OUTPUT
-$ ./sem.o 
+$ ./sem.o
+
+![322712711-93491f07-6e92-4bd4-9273-908d89f07ec0](https://github.com/04Varsha/Linux-IPC-Semaphores/assets/149035374/d39c2d90-86da-438a-98cf-87f5dbe2511b)
 
 $ ipcs
 
-![image](https://github.com/swathisiva212/Linux-IPC-Semaphores/assets/155249892/a113b23e-1d42-4de8-a7bf-b1651fbd7192)
-
-
-
+![322712733-429e1706-6215-4308-9b25-4655af2bac2a](https://github.com/04Varsha/Linux-IPC-Semaphores/assets/149035374/b23ee845-7e24-4b4e-a56a-f3d33e853a2b)
 
 # RESULT:
 The program is executed successfully.
