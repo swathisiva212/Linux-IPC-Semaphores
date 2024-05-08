@@ -19,10 +19,11 @@ Write the C Program using Linux Process API - Sempahores
 Execute the C Program for the desired output. 
 
 # PROGRAM:
+```
+Developed by : SWATHI S
+Register Number : 212223040219
 
-Developed by : VARSHA A
-Register Number : 212223220121
-
+```
 ## Write a C program that implements a producer-consumer system with two processes using Semaphores.
 ~~~
 /*
